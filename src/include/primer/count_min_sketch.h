@@ -12,11 +12,12 @@
 
 #pragma once
 
+#include <atomic>
 #include <cstdint>
 #include <functional>
+#include <mutex>
 #include <utility>
 #include <vector>
-
 #include "common/util/hash_util.h"
 
 namespace bustub {
@@ -85,6 +86,8 @@ class CountMinSketch {
   /** Pre-computed hash functions for each row */
   std::vector<std::function<size_t(const KeyType &)>> hash_functions_;
 
+  std::vector<std::vector<std::atomic<uint32_t>>> sketch_;
+  mutable std::mutex mutex_;
   /** @spring2026 PLEASE DO NOT MODIFY THE FOLLOWING */
   constexpr static size_t SEED_BASE = 15445;
 
